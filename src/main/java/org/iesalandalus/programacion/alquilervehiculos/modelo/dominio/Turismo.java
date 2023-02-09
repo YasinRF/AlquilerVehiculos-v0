@@ -25,6 +25,8 @@ public class Turismo {
 		setCilindrada(cilindrada);
 		setMatricula(matricula);
 	}
+	
+	//GETTERS Y SETTERS
 
 	public String getMarca() {
 		return marca;
