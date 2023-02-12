@@ -12,6 +12,8 @@ public class Turismo {
 	private int cilindrada;
 	private String matricula;
 	
+	//CREAMOS LOS CONSTRUCTORES Y EL CONSTRUCTOR COPIA
+	
 	public Turismo(String marca, String modelo, int cilindrada, String matricula) {
 		setMarca(marca);
 		setModelo(modelo);
@@ -34,7 +36,7 @@ public class Turismo {
 
 	public void setMarca(String marca) {
 		if(!marca.matches(ER_MARCA)) {
-			throw new IllegalArgumentException("ERROR: La marca no es correcta");
+			throw new IllegalArgumentException("ERROR: La marca no tiene un formato válido.");
 		}
 		this.marca = marca;
 	}
@@ -46,6 +48,9 @@ public class Turismo {
 	public void setModelo(String modelo) {
 		if(!modelo.matches(modelo)) {
 			throw new IllegalArgumentException("ERROR: El modelo no es correcto");
+		}
+		if(modelo.isBlank()) {
+			throw new IllegalArgumentException("ERROR: El modelo no puede estar en blanco.");
 		}
 		this.modelo = modelo;
 	}
@@ -67,7 +72,7 @@ public class Turismo {
 
 	public void setMatricula(String matricula) {
 		if(!matricula.matches(ER_MATRICULA)) {
-			throw new IllegalArgumentException("ERROR: La matricula no es correcta");
+			throw new NullPointerException("ERROR: La matrícula no puede ser nula.");
 		}
 		this.matricula = matricula;
 	}
