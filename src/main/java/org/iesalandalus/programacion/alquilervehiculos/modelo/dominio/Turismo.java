@@ -3,39 +3,45 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 import java.util.Objects;
 
 public class Turismo {
-	
-	private static final String ER_MARCA = "^[A-z][a-z]*|[A-Z][a-z]* \s [A-z][a-z]*|[A-Z][a-z] - [A-z][a-z]*|[A-Z][a-z]*|[A-z][a-z]*|[A-Z][a-z]**";
-	private static final String ER_MATRICULA = "^[0-9]{4}(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{3}";
-	
+
+	private static final String ER_MARCA = "^[A-Z][a-z]+|^[A-Z][a-z]+\\s[A-Z][a-z]+|^[A-Z]+|^[A-Z][a-z]+[A-Z][a-z]+|^[A-Z][a-z]+-[A-Z][a-z]+";
+	private static final String ER_MATRICULA = "^[0-9]{4}[BCDFGHJKLMNPRSTVWXYZ]{3}";
+
 	private String marca;
 	private String modelo;
 	private int cilindrada;
 	private String matricula;
-	
-	//CREAMOS LOS CONSTRUCTORES Y EL CONSTRUCTOR COPIA
-	
+
+	// CREAMOS LOS CONSTRUCTORES Y EL CONSTRUCTOR COPIA
+
 	public Turismo(String marca, String modelo, int cilindrada, String matricula) {
 		setMarca(marca);
 		setModelo(modelo);
 		setCilindrada(cilindrada);
 		setMatricula(matricula);
 	}
-	
+
 	public Turismo(Turismo turismo) {
-		setMarca(ER_MARCA);
-		setModelo(modelo);
-		setCilindrada(cilindrada);
-		setMatricula(matricula);
+		if (turismo == null) {
+			throw new NullPointerException("ERROR: No es posible copiar un turismo nulo.");
+		}
+		this.marca = turismo.getMarca();
+		this.modelo = turismo.getModelo();
+		this.cilindrada = turismo.getCilindrada();
+		this.matricula = turismo.getMatricula();
 	}
-	
-	//GETTERS Y SETTERS
+
+	// GETTERS Y SETTERS
 
 	public String getMarca() {
 		return marca;
 	}
 
 	public void setMarca(String marca) {
-		if(!marca.matches(ER_MARCA)) {
+		if (marca == null) {
+			throw new NullPointerException("ERROR: La marca no puede ser nula.");
+		}
+		if (!marca.matches(ER_MARCA)) {
 			throw new IllegalArgumentException("ERROR: La marca no tiene un formato válido.");
 		}
 		this.marca = marca;
@@ -46,10 +52,10 @@ public class Turismo {
 	}
 
 	public void setModelo(String modelo) {
-		if(!modelo.matches(modelo)) {
-			throw new IllegalArgumentException("ERROR: El modelo no es correcto");
+		if (modelo == null) {
+			throw new NullPointerException("ERROR: El modelo no puede ser nulo.");
 		}
-		if(modelo.isBlank()) {
+		if (modelo.isBlank()) {
 			throw new IllegalArgumentException("ERROR: El modelo no puede estar en blanco.");
 		}
 		this.modelo = modelo;
@@ -60,8 +66,8 @@ public class Turismo {
 	}
 
 	public void setCilindrada(int cilindrada) {
-		if(cilindrada<=0 || cilindrada > 5000) {
-			throw new IllegalArgumentException("ERROR: La cilindrada no es correcta");
+		if (cilindrada <= 0 || cilindrada > 5000) {
+			throw new IllegalArgumentException("ERROR: La cilindrada no es correcta.");
 		}
 		this.cilindrada = cilindrada;
 	}
@@ -71,19 +77,30 @@ public class Turismo {
 	}
 
 	public void setMatricula(String matricula) {
-		if(!matricula.matches(ER_MATRICULA)) {
+		if (matricula == null) {
 			throw new NullPointerException("ERROR: La matrícula no puede ser nula.");
+		}
+		if (!matricula.matches(ER_MATRICULA)) {
+			throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
 		}
 		this.matricula = matricula;
 	}
-	
+
 	public static Turismo getTurismoConMatricula(String matricula) {
-		return new Turismo ("KIA", "DIESEL", 250, matricula);
+		return new Turismo("KIA", "CEED", 250, matricula);
+	}
+
+	// CREAMOS EL HASHCODE, EQUALS Y TOSTRING
+
+	@Override
+	public String toString() {
+		return String.format("%s %s (%sCV) - %s", marca, modelo, cilindrada,
+				matricula);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cilindrada, marca, matricula, modelo);
+		return Objects.hash(matricula);
 	}
 
 	@Override
@@ -95,15 +112,7 @@ public class Turismo {
 		if (getClass() != obj.getClass())
 			return false;
 		Turismo other = (Turismo) obj;
-		return cilindrada == other.cilindrada && Objects.equals(marca, other.marca)
-				&& Objects.equals(matricula, other.matricula) && Objects.equals(modelo, other.modelo);
+		return Objects.equals(matricula, other.matricula);
 	}
-
-	@Override
-	public String toString() {
-		return String.format("Turismo [marca=%s, modelo=%s, cilindrada=%s, matricula=%s]", marca, modelo, cilindrada,
-				matricula);
-	}
-	
 
 }

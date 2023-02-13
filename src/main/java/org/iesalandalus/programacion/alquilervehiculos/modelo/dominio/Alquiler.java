@@ -17,6 +17,8 @@ public class Alquiler {
 	private Cliente cliente;
 	private Turismo turismo;
 	
+	// CREAMOS LOS CONSTRUCTORES Y EL CONSTRUCTOR COPIA
+	
 	public Alquiler(Cliente cliente, Turismo turismo, LocalDate fechaAlquiler) {
 		setCliente(cliente);
 		setTurismo(turismo);
@@ -49,7 +51,7 @@ public class Alquiler {
 
 	public void setFechaAlquiler(LocalDate fechaAlquiler) {
 		if(cliente == null) {
-			throw new NullPointerException("ERROR: El cliente no puede ser nulo.");
+			throw new NullPointerException("ERROR: La fecha de alquiler no puede ser nula.");
 		}
 		this.fechaAlquiler = fechaAlquiler;
 	}
@@ -91,6 +93,12 @@ public class Alquiler {
 		setFechaDevolucion(fechaDevolucion);
 	}
 	
+	public int getPrecio() {
+		return null;
+	}
+	
+	// CREAMOS EL HASHCODE, EQUALS Y TOSTRING
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(cliente, fechaAlquiler, fechaDevolucion, turismo);
@@ -121,13 +129,5 @@ public class Alquiler {
 		}
 
 	}
-
-	private Object getPrecio() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
 
 }
