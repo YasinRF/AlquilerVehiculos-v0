@@ -92,7 +92,6 @@ public class Cliente {
 		return new Cliente ("Bob Esponja", dni, "950112233");
 	}
 	
-	// CREAMOS EL HASHCODE, EQUALS Y TOSTRING
 
 	@Override
 	public int hashCode() {
