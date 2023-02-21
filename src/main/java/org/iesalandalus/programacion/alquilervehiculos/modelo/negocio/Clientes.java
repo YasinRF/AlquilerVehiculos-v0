@@ -7,19 +7,21 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 
 
 public class Clientes {
+	
+	//Array list
 
-	private List<Cliente> coleccionCliente;
+	private List<Cliente> coleccionClientes;
 
 	public Clientes() {
-		coleccionCliente = new ArrayList<>();
+		coleccionClientes = new ArrayList<>();
 	}
 	
 	public List<Cliente> get() {
-		return new ArrayList<Cliente>(coleccionCliente);
+		return new ArrayList<Cliente>(coleccionClientes);
 	}
 
 	public int getCantidad() {
-		return coleccionCliente.size();
+		return coleccionClientes.size();
 	}
 
 	public void insertar(Cliente cliente) throws OperationNotSupportedException {
@@ -27,18 +29,18 @@ public class Clientes {
 			throw new NullPointerException("ERROR: No se puede insertar un cliente nulo.");
 		}
 
-		if (coleccionCliente.contains(cliente)) {
+		if (coleccionClientes.contains(cliente)) {
 			throw new OperationNotSupportedException("ERROR: Ya existe un cliente con ese DNI.");
 		}
 
-		coleccionCliente.add(cliente);
+		coleccionClientes.add(cliente);
 	}
 
 	public Cliente buscar(Cliente cliente) {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un cliente nulo.");
 		}
-		if (coleccionCliente.contains(cliente)) {
+		if (coleccionClientes.contains(cliente)) {
 			return cliente;
 		}
 		return null;
@@ -49,10 +51,10 @@ public class Clientes {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede borrar un cliente nulo.");
 		}
-		if (!coleccionCliente.contains(cliente)) {
+		if (!coleccionClientes.contains(cliente)) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún cliente con ese DNI.");
 		}
-		coleccionCliente.remove(cliente);
+		coleccionClientes.remove(cliente);
 	}
 
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
@@ -60,7 +62,7 @@ public class Clientes {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede modificar un cliente nulo.");
 		}
-		if (!coleccionCliente.contains(cliente)) {
+		if (!coleccionClientes.contains(cliente)) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún cliente con ese DNI.");
 		} else {
 			if (nombre != null && !nombre.trim().isEmpty()) {
