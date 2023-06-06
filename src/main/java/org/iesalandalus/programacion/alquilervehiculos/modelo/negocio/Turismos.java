@@ -7,7 +7,7 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 
 public class Turismos {
 	
-	//Array list
+	// ARRAY LIST
 	
 	private List <Turismo> coleccionTurismos;
 	
@@ -16,7 +16,7 @@ public class Turismos {
 	}
 	
 	public List<Turismo> get(){
-		return new ArrayList<Turismo>(coleccionTurismos);
+		return new ArrayList<>(coleccionTurismos);
 	}
 	
 	public int getCantidad() {
@@ -27,22 +27,25 @@ public class Turismos {
 		if (turismo == null) {
 			throw new NullPointerException("ERROR: No se puede insertar un turismo nulo.");
 		}
-
 		if (coleccionTurismos.contains(turismo)) {
 			throw new OperationNotSupportedException("ERROR: Ya existe un turismo con esa matrícula.");
 		}
-
 		coleccionTurismos.add(turismo);
 	}
+
 	
 	public Turismo buscar(Turismo turismo) {
+		Turismo turismoBuscado;
 		if (turismo == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un turismo nulo.");
 		}
+		int indice = coleccionTurismos.indexOf(turismo);
 		if (coleccionTurismos.contains(turismo)) {
-			return turismo;
+			turismoBuscado = coleccionTurismos.get(indice);
+		} else {
+			turismoBuscado = null;
 		}
-		return null;
+		return turismoBuscado;
 	}
 	
 	public void borrar(Turismo turismo) throws OperationNotSupportedException {

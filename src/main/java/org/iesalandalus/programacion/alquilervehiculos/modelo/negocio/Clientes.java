@@ -5,19 +5,19 @@ import java.util.List;
 import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 
-
 public class Clientes {
-	
-	//Array list
+
+	// ARRAY LIST
 
 	private List<Cliente> coleccionClientes;
+	
 
 	public Clientes() {
 		coleccionClientes = new ArrayList<>();
 	}
-	
+
 	public List<Cliente> get() {
-		return new ArrayList<Cliente>(coleccionClientes);
+		return new ArrayList<>(coleccionClientes);
 	}
 
 	public int getCantidad() {
@@ -40,10 +40,8 @@ public class Clientes {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un cliente nulo.");
 		}
-		if (coleccionClientes.contains(cliente)) {
-			return cliente;
-		}
-		return null;
+		int indice = coleccionClientes.indexOf(cliente);
+		return indice == -1 ? null : coleccionClientes.get(indice);
 	}
 
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
@@ -62,15 +60,15 @@ public class Clientes {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede modificar un cliente nulo.");
 		}
-		if (!coleccionClientes.contains(cliente)) {
+		Cliente buscarCliente = buscar(cliente);
+		if (buscarCliente == null) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún cliente con ese DNI.");
 		} else {
-			if (nombre != null && !nombre.trim().isEmpty()) {
-				cliente.setNombre(nombre);
+			if (nombre != null && !nombre.isBlank()) {
+				buscarCliente.setNombre(nombre);
 			}
-
-			if (telefono != null && !telefono.trim().isEmpty()) {
-				cliente.setTelefono(telefono);
+			if (telefono != null && !telefono.isBlank()) {
+				buscarCliente.setTelefono(telefono);
 			}
 		}
 

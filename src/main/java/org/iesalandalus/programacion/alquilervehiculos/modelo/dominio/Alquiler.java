@@ -9,7 +9,7 @@ import javax.naming.OperationNotSupportedException;
 
 public class Alquiler {
 
-	protected static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd\\MM\\yyyy");
+	static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private static final int PRECIO_DIA = 20;
 
 	private LocalDate fechaAlquiler;
@@ -76,8 +76,7 @@ public class Alquiler {
 			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser futura.");
 		}
 		if (fechaDevolucion.isBefore(fechaAlquiler) || fechaDevolucion.isEqual(fechaAlquiler)) {
-			throw new IllegalArgumentException(
-					"ERROR: La fecha de devolución debe ser posterior a la fecha de alquiler.");
+			throw new IllegalArgumentException("ERROR: La fecha de devolución debe ser posterior a la fecha de alquiler.");
 		}
 		this.fechaDevolucion = fechaDevolucion;
 	}
@@ -133,15 +132,19 @@ public class Alquiler {
 
 	@Override
 	public String toString() {
+		String mensaje;
+		
 		if (fechaDevolucion == null) {
-			return String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
+			mensaje = String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
 					fechaAlquiler.format(Alquiler.FORMATO_FECHA), "Aún no devuelto", 0);
 		} else {
-			return String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
+			mensaje = String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
 					fechaAlquiler.format(Alquiler.FORMATO_FECHA), fechaDevolucion.format(Alquiler.FORMATO_FECHA),
 					getPrecio());
 		}
-
+		
+		return mensaje;
+		
 	}
 
 }

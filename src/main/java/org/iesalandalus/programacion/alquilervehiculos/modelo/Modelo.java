@@ -34,27 +34,27 @@ public class Modelo {
 	}
 
 	public void insertar(Cliente cliente) throws OperationNotSupportedException {
-			clientes.insertar(cliente);
+			clientes.insertar(new Cliente(cliente));
 			
 	}
 
 	public void insertar(Turismo turismo) throws OperationNotSupportedException {
-			turismos.insertar(turismo);
+			turismos.insertar(new Turismo(turismo));
 	}
 
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
 		}
-		Cliente cliente = clientes.buscar(alquiler.getCliente());
-		if (cliente == null) {
+		Cliente buscarCliente = clientes.buscar(alquiler.getCliente());
+		if (buscarCliente == null) {
 			throw new OperationNotSupportedException("ERROR: No existe el cliente del alquiler.");
 		}
-		Turismo turismo = turismos.buscar(alquiler.getTurismo());
-		if ( turismo == null) {
+		Turismo buscarTurismo = turismos.buscar(alquiler.getTurismo());
+		if ( buscarTurismo == null) {
 			throw new OperationNotSupportedException("ERROR: No existe el turismo del alquiler.");
 		}
-		alquileres.insertar(new Alquiler(cliente, turismo, alquiler.getFechaAlquiler()));
+		alquileres.insertar(new Alquiler(buscarCliente, buscarTurismo, alquiler.getFechaAlquiler()));
 	}
 
 	public Cliente buscar(Cliente cliente) {
@@ -74,10 +74,12 @@ public class Modelo {
 	}
 
 	public void devolver(Alquiler alquiler, LocalDate fechaDevolucion) throws OperationNotSupportedException {
-		if (alquileres.buscar(alquiler) == null) {
+		
+		Alquiler alquilerADevolver = alquileres.buscar(alquiler);
+		if (alquilerADevolver == null) {
 			throw new OperationNotSupportedException("ERROR: No existe el alquiler a devolver.");
 		}
-		alquiler.devolver(fechaDevolucion);
+		alquilerADevolver.devolver(fechaDevolucion);
 	}
 
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
@@ -99,42 +101,42 @@ public class Modelo {
 	}
 
 	public List<Cliente> getClientes() {
-		List<Cliente> lista = new ArrayList<>();
+		List<Cliente> listaClientes = new ArrayList<>();
 		for (Cliente cliente : clientes.get()) {
-			lista.add(new Cliente(cliente));
+			listaClientes.add(new Cliente(cliente));
 		}
-		return lista;
+		return listaClientes;
 	}
 
 	public List<Turismo> getTurismos() {
-		List<Turismo> lista = new ArrayList<>();
+		List<Turismo> listaTurismos = new ArrayList<>();
 		for (Turismo turismo : turismos.get()) {
-			lista.add(new Turismo(turismo));
+			listaTurismos.add(new Turismo(turismo));
 		}
-		return lista;
+		return listaTurismos;
 	}
 
 	public List<Alquiler> getAlquileres() {
-		List<Alquiler> lista = new ArrayList<>();
+		List<Alquiler> listaAlquileres = new ArrayList<>();
 		for (Alquiler alquiler : alquileres.get()) {
-			lista.add(new Alquiler(alquiler));
+			listaAlquileres.add(new Alquiler(alquiler));
 		}
-		return lista;
+		return listaAlquileres;
 	}
 
 	public List<Alquiler> getAlquileres(Cliente cliente) {
-		List<Alquiler> lista = new ArrayList<>();
+		List<Alquiler> listaAlquileresCliente = new ArrayList<>();
 		for (Alquiler alquiler : alquileres.get(cliente)) {
-			lista.add(new Alquiler(alquiler));
+			listaAlquileresCliente.add(new Alquiler(alquiler));
 		}
-		return lista;
+		return listaAlquileresCliente;
 	}
 
 	public List<Alquiler> getAlquileres(Turismo turismo) {
-		List<Alquiler> lista = new ArrayList<>();
+		List<Alquiler> listaAlquileresTurismo = new ArrayList<>();
 		for (Alquiler alquiler : alquileres.get(turismo)) {
-			lista.add(new Alquiler(alquiler));
+			listaAlquileresTurismo.add(new Alquiler(alquiler));
 		}
-		return lista;}
+		return listaAlquileresTurismo;}
 
 }
